@@ -3,6 +3,13 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
+
+# Load environment variables
+if [ -f "$PROJECT_DIR/.env" ]; then
+  set -a
+  source "$PROJECT_DIR/.env"
+  set +a
+fi
 OUTPUT_DIR="$PROJECT_DIR/output"
 TODAY=$(date +%Y-%m-%d)
 OUTPUT_FILE="$OUTPUT_DIR/$TODAY.md"
@@ -39,3 +46,14 @@ Scan the content at these paths and extract valuable insights."
 echo "$PROMPT" | "${CMD_ARGS[@]}" > "$OUTPUT_FILE"
 
 echo "Digest generated: $OUTPUT_FILE"
+
+# Commit and push to GitHub for notifications
+cd "$PROJECT_DIR"
+git add output/
+if ! git diff --cached --quiet; then
+  git commit -m "Daily digest $TODAY"
+  git push
+  echo "Pushed to GitHub."
+else
+  echo "No changes to push."
+fi
