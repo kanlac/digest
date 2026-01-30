@@ -1,0 +1,13 @@
+sources:
+  - name: "Lenny's Podcast"
+    type: local_repo
+    path: /Users/kan/Documents/lennys-podcast-transcripts
+    description: "Lenny Rachitsky 的播客手稿"
+    url_prefix: "https://www.youtube.com/@LennysPodcast"
+    glob: "**/*.{txt,md}"
+
+  - name: "电子书"
+    type: local_directory
+    path: /Users/kan/Documents/digest/books
+    description: "本地电子书收藏"
+    glob: "**/*.{txt,md,epub,pdf}"

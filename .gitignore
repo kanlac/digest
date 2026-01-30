@@ -1,0 +1,4 @@
+output/
+books/
+.env
+.DS_Store
